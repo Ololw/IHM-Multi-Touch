@@ -57,6 +57,7 @@ export let drag =       ( element               : HTMLElement
                         ) => {
 	// TO BE DONE
     var matrixReloaded : SVGMatrix;
+    matrixReloaded = new SVGMatrix();
     matrixReloaded.a = originalMatrix.a;
     matrixReloaded.b = originalMatrix.b;
     matrixReloaded.c = originalMatrix.c;

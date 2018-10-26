@@ -5,6 +5,7 @@ function multiTouch(element: HTMLElement) : void {
     let pointerId_1 : number, Pt1_coord_element : SVGPoint, Pt1_coord_parent : SVGPoint,
         pointerId_2 : number, Pt2_coord_element : SVGPoint, Pt2_coord_parent : SVGPoint,
         originalMatrix : SVGMatrix,
+        svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"),
         getRelevantDataFromEvent = (evt : TouchEvent) : Touch => {
             for(let i=0; i<evt.changedTouches.length; i++) {
                 let touch = evt.changedTouches.item(i);
@@ -24,8 +25,13 @@ function multiTouch(element: HTMLElement) : void {
                 eventName: ["touchstart"],
                 useCapture: false,
                 action: (evt : TouchEvent) : boolean => {
+
+                        //FAUT FAIRE UN SVGPOINT
+                        Pt1_coord_element = svg.createSVGPoint();
                         Pt1_coord_element.x = evt.touches[0].clientX;
                         Pt1_coord_element.y = evt.touches[0].clientY;
+
+                        originalMatrix = svg.createSVGMatrix();
                         originalMatrix.a = 1 ;
                         originalMatrix.b = 0 ;
                         originalMatrix.c = 0 ;
