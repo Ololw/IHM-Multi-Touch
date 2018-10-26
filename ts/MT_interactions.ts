@@ -53,6 +53,7 @@ function multiTouch(element: HTMLElement) : void {
                     evt.preventDefault();
                     evt.stopPropagation();
                     // To be completed
+                    Pt1_coord_parent = svg.createSVGPoint();
                     Pt1_coord_parent.x = evt.touches[0].clientX;
                     Pt1_coord_parent.y = evt.touches[0].clientY;
                     transfo.drag(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent);
@@ -65,7 +66,9 @@ function multiTouch(element: HTMLElement) : void {
                 eventName: ["touchend"],
                 useCapture: true,
                 action: (evt : TouchEvent) : boolean => {
-                    // To be completed
+                    Pt1_coord_element = svg.createSVGPoint();
+                    Pt1_coord_element.x = Pt1_coord_parent.x;
+                    Pt1_coord_element.y = Pt1_coord_parent.y;
                     return true;
                 }
             },
