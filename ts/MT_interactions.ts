@@ -27,17 +27,13 @@ function multiTouch(element: HTMLElement) : void {
                 action: (evt : TouchEvent) : boolean => {
 
                         //FAUT FAIRE UN SVGPOINT
+                        originalMatrix = transfo.getMatrixFromElement(element);
                         Pt1_coord_element = svg.createSVGPoint();
-                        Pt1_coord_element.x = evt.touches[0].clientX;
-                        Pt1_coord_element.y = evt.touches[0].clientY;
+                        Pt1_coord_element.x = evt.touches[0].clientX - originalMatrix.e;
+                        Pt1_coord_element.y = evt.touches[0].clientY - originalMatrix.f;
 
-                        originalMatrix = svg.createSVGMatrix();
-                        originalMatrix.a = 1 ;
-                        originalMatrix.b = 0 ;
-                        originalMatrix.c = 0 ;
-                        originalMatrix.d = 1 ;
-                        originalMatrix.e = 0 ;
-                        originalMatrix.f = 0 ;
+                        originalMatrix = transfo.getMatrixFromElement(element);
+
                  /*   if(evt.touches.length > 1) {
                         Pt2_coord_element.x = evt.touches[1].clientX;
                         Pt2_coord_element.y = evt.touches[1].clientY;

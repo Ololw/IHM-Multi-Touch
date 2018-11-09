@@ -56,20 +56,15 @@ export let drag =       ( element               : HTMLElement
                         , Pt_coord_parent       : SVGPoint
                         ) => {
 	// TO BE DONE
-    var matrixReloaded : SVGMatrix;
-    matrixReloaded = svg.createSVGMatrix();
-    matrixReloaded.a = originalMatrix.a;
-    matrixReloaded.b = originalMatrix.b;
-    matrixReloaded.c = originalMatrix.c;
-    matrixReloaded.d = originalMatrix.d;
-
     // P’.x - aP.x - cP.y
-    matrixReloaded.e = Pt_coord_parent.x - originalMatrix.a * Pt_coord_element.x - originalMatrix.c * Pt_coord_element.y ;
+    originalMatrix.e = Pt_coord_parent.x - originalMatrix.a * Pt_coord_element.x - originalMatrix.c * Pt_coord_element.y ;
+
 
     //  = P’.y - bP.x - dP.y
-    matrixReloaded.f = Pt_coord_parent.y - originalMatrix.b * Pt_coord_element.x - originalMatrix.d * Pt_coord_element.y ;
+    originalMatrix.f = Pt_coord_parent.y - originalMatrix.b * Pt_coord_element.x - originalMatrix.d * Pt_coord_element.y ;
 
-    setMatrixToElement(element, matrixReloaded);
+
+    setMatrixToElement(element, originalMatrix);
 };
 
 //______________________________________________________________________________________________________________________
