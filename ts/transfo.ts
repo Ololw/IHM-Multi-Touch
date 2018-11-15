@@ -62,7 +62,7 @@ export let drag =       ( element               : HTMLElement
     //  = P’.y - bP.x - dP.y
     originalMatrix.f = Pt_coord_parent.y - originalMatrix.b * Pt_coord_element.x - originalMatrix.d * Pt_coord_element.y ;
 
-
+//On applique la matrice a l'element apres avoir change les coefficients e et f
     setMatrixToElement(element, originalMatrix);
 };
 
@@ -81,6 +81,7 @@ export let rotozoom =   ( element           : HTMLElement
     var s = 0;
     var c = 0;
 
+//Les differents cas afin de calculer s et c
     if(dx === 0 && dy === 0) {
         return;
     } else if(dx === 0 && dy !== 0) {
@@ -94,6 +95,7 @@ export let rotozoom =   ( element           : HTMLElement
         c = (dyp - s * dx) / dy;
     }
 
+//On change la matrice et on l'applique a l'element
     let e = Pt1_coord_parent.x - c * Pt1_coord_element.x + s * Pt1_coord_element.y;
     let f = Pt1_coord_parent.y - s * Pt1_coord_element.x - c * Pt1_coord_element.y;
     originalMatrix.a = c;
