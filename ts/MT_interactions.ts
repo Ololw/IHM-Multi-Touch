@@ -29,7 +29,8 @@ function multiTouch(element: HTMLElement) : void {
 
                         pointerId_1 = 0;
                         pointerId_2 = 1;
-
+                        
+                        //On recup la matrice de l'element et le point du touch
                         originalMatrix = transfo.getMatrixFromElement(element);
                         Pt1_coord_element = transfo.getPoint(evt.touches[pointerId_1].clientX, evt.touches[pointerId_1].clientY).matrixTransform(originalMatrix.inverse());
                         Pt1_coord_parent = transfo.getPoint(evt.touches[pointerId_1].clientX, evt.touches[pointerId_1].clientY);
@@ -44,9 +45,11 @@ function multiTouch(element: HTMLElement) : void {
                 action: (evt : TouchEvent) : boolean => {
                     evt.preventDefault();
                     evt.stopPropagation();
+                    //On recupere le point du touch
                     Pt1_coord_parent = svg.createSVGPoint();
                     Pt1_coord_parent.x = evt.touches[0].clientX;
                     Pt1_coord_parent.y = evt.touches[0].clientY;
+                    //On utilise la fonction drag afin de calculer la nouvelle matrice et changer la place de l'element
                     transfo.drag(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent);
                     return true;
                 }
@@ -78,6 +81,7 @@ function multiTouch(element: HTMLElement) : void {
                     evt.preventDefault();
                     evt.stopPropagation();
 
+                    //On recupere les points des deux touches 
                     Pt1_coord_parent = svg.createSVGPoint();
                     Pt1_coord_parent.x = evt.touches[pointerId_1].clientX;
                     Pt1_coord_parent.y = evt.touches[pointerId_1].clientY;
@@ -85,6 +89,7 @@ function multiTouch(element: HTMLElement) : void {
                     Pt2_coord_parent = svg.createSVGPoint();
                     Pt2_coord_parent.x = evt.touches[pointerId_2].clientX;
                     Pt2_coord_parent.y = evt.touches[pointerId_2].clientY;
+                    //Puis on utilise la fonction rotozoom pour changer la matrice de l'element et l'appliquer
                     transfo.rotozoom(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent, Pt2_coord_element, Pt2_coord_parent);
                     return true;
                 }
