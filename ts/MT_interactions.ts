@@ -25,19 +25,15 @@ function multiTouch(element: HTMLElement) : void {
                 eventName: ["touchstart"],
                 useCapture: false,
                 action: (evt : TouchEvent) : boolean => {
+                        evt.preventDefault();
 
-                        //FAUT FAIRE UN SVGPOINT
-                        originalMatrix = transfo.getMatrixFromElement(element);
-                        Pt1_coord_element = svg.createSVGPoint();
-                        Pt1_coord_element.x = evt.touches[0].clientX - originalMatrix.e;
-                        Pt1_coord_element.y = evt.touches[0].clientY - originalMatrix.f;
+                        pointerId_1 = 0;
+                        pointerId_2 = 1;
 
                         originalMatrix = transfo.getMatrixFromElement(element);
+                        Pt1_coord_element = transfo.getPoint(evt.touches[pointerId_1].clientX, evt.touches[pointerId_1].clientY).matrixTransform(originalMatrix.inverse());
+                        Pt1_coord_parent = transfo.getPoint(evt.touches[pointerId_1].clientX, evt.touches[pointerId_1].clientY);
 
-                 /*   if(evt.touches.length > 1) {
-                        Pt2_coord_element.x = evt.touches[1].clientX;
-                        Pt2_coord_element.y = evt.touches[1].clientY;
-                    }*/
                     return true;
                 }
             },
@@ -48,7 +44,6 @@ function multiTouch(element: HTMLElement) : void {
                 action: (evt : TouchEvent) : boolean => {
                     evt.preventDefault();
                     evt.stopPropagation();
-                    // To be completed
                     Pt1_coord_parent = svg.createSVGPoint();
                     Pt1_coord_parent.x = evt.touches[0].clientX;
                     Pt1_coord_parent.y = evt.touches[0].clientY;
@@ -62,9 +57,6 @@ function multiTouch(element: HTMLElement) : void {
                 eventName: ["touchend"],
                 useCapture: true,
                 action: (evt : TouchEvent) : boolean => {
-                    Pt1_coord_element = svg.createSVGPoint();
-                    Pt1_coord_element.x = Pt1_coord_parent.x;
-                    Pt1_coord_element.y = Pt1_coord_parent.y;
                     return true;
                 }
             },
@@ -73,7 +65,8 @@ function multiTouch(element: HTMLElement) : void {
                 eventName: ["touchstart"],
                 useCapture: false,
                 action: (evt : TouchEvent) : boolean => {
-                    // To be completed
+                    Pt2_coord_element = transfo.getPoint(evt.touches[pointerId_2].clientX, evt.touches[pointerId_2].clientY).matrixTransform(originalMatrix.inverse());
+                    Pt2_coord_parent = transfo.getPoint(evt.touches[pointerId_2].clientX, evt.touches[pointerId_2].clientY);
                     return true;
                 }
             },
@@ -84,7 +77,15 @@ function multiTouch(element: HTMLElement) : void {
                 action: (evt : TouchEvent) : boolean => {
                     evt.preventDefault();
                     evt.stopPropagation();
-                    // To be completed
+
+                    Pt1_coord_parent = svg.createSVGPoint();
+                    Pt1_coord_parent.x = evt.touches[pointerId_1].clientX;
+                    Pt1_coord_parent.y = evt.touches[pointerId_1].clientY;
+
+                    Pt2_coord_parent = svg.createSVGPoint();
+                    Pt2_coord_parent.x = evt.touches[pointerId_2].clientX;
+                    Pt2_coord_parent.y = evt.touches[pointerId_2].clientY;
+                    transfo.rotozoom(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent, Pt2_coord_element, Pt2_coord_parent);
                     return true;
                 }
             },
@@ -95,7 +96,8 @@ function multiTouch(element: HTMLElement) : void {
                 useCapture: true,
                 action: (evt : TouchEvent) : boolean => {
                     const touch = getRelevantDataFromEvent(evt);
-                    // To be completed
+                    Pt1_coord_element = transfo.getPoint(touch.clientX, touch.clientY).matrixTransform(originalMatrix.inverse());
+                    Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
                     return true;
                 }
             }
